@@ -1,0 +1,45 @@
+# Frontend build output
+/client/dist
+/client/.angular
+/client/tmp
+/client/out-tsc
+/client/bazel-out
+
+# Backend build output
+/server/dist
+
+# Dependencies
+/client/node_modules
+/server/node_modules
+
+# Environment files
+/server/.env
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# VS Code
+/client/.history/
+
+# Miscellaneous
+.sass-cache/
+/client/connect.lock
+/client/coverage
+/client/libpeerconnection.log
+testem.log
+/client/typings
+/client/__screenshots__/
+
+# System files
+.DS_Store
+Thumbs.db

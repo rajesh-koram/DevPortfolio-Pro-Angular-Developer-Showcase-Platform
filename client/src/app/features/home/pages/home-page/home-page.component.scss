@@ -1,0 +1,262 @@
+:host {
+  display: block;
+}
+
+.home-page {
+  min-height: 100dvh;
+}
+
+.home-page__container {
+  margin: 0 auto;
+  width: min(100% - 1.5rem, 1240px);
+}
+
+.portfolio-section {
+  padding: 2rem 0 6rem;
+  scroll-margin-top: 8rem;
+}
+
+.about-grid,
+.contact-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.about-panel,
+.content-card,
+.about-highlight-card {
+  border-radius: 1.75rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.about-panel,
+.content-card {
+  padding: 1.5rem;
+}
+
+.about-panel h3,
+.about-highlight-card h3,
+.content-card h3 {
+  margin: 0 0 1rem;
+  color: var(--color-heading);
+}
+
+.about-panel ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.9rem;
+  color: var(--color-text);
+}
+
+.about-panel li::marker {
+  color: #38bdf8;
+}
+
+.about-highlights,
+.services-grid,
+.skills-grid,
+.projects-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.about-highlight-card {
+  padding: 1.35rem;
+
+  p {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.8;
+  }
+}
+
+.content-card p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.8;
+}
+
+.skill-card__title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+
+  span {
+    font-size: 1.35rem;
+  }
+}
+
+.skill-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+
+  span {
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    padding: 0.55rem 0.8rem;
+    color: var(--color-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+
+.contact-grid {
+  align-items: start;
+}
+
+.contact-list {
+  display: grid;
+  gap: 1rem;
+
+  .contact-list__item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.85rem;
+    border-radius: 1rem;
+    border: 1px solid var(--color-border);
+    padding: 1rem;
+    background: rgba(148, 163, 184, 0.04);
+  }
+
+  a {
+    display: grid;
+    gap: 0.2rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-heading);
+    padding: 0.7rem 0.95rem;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: transform 180ms ease, border-color 180ms ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      border-color: rgba(56, 189, 248, 0.45);
+    }
+  }
+
+  span {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  strong {
+    color: var(--color-heading);
+  }
+}
+
+.contact-form {
+  display: grid;
+  gap: 1rem;
+
+  label {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  span {
+    color: var(--color-heading);
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: transparent;
+    padding: 0.95rem 1rem;
+    color: var(--color-text);
+    font: inherit;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  button {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.95rem 1.2rem;
+    background: linear-gradient(135deg, #38bdf8, #7c3aed);
+    color: white;
+    font: inherit;
+    font-weight: 700;
+
+    &:disabled {
+      cursor: wait;
+      opacity: 0.75;
+    }
+  }
+}
+
+.contact-form__error {
+  color: #f87171;
+  font-size: 0.82rem;
+}
+
+.contact-form__notice {
+  margin: 0;
+  border-radius: 1rem;
+  padding: 0.9rem 1rem;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.contact-form__notice--success {
+  background: rgba(34, 197, 94, 0.12);
+  color: #86efac;
+}
+
+.contact-form__notice--error {
+  background: rgba(248, 113, 113, 0.12);
+  color: #fca5a5;
+}
+
+@media (min-width: 768px) {
+  .about-grid,
+  .contact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-highlights,
+  .services-grid,
+  .skills-grid,
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .contact-list .contact-list__item {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1080px) {
+  .projects-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

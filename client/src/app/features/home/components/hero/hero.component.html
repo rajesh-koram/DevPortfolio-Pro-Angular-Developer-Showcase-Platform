@@ -1,0 +1,72 @@
+<section id="home" class="hero-section">
+  <div class="hero-section__backdrop hero-section__backdrop--one"></div>
+  <div class="hero-section__backdrop hero-section__backdrop--two"></div>
+
+  <div class="hero-section__content">
+    <div class="hero-section__copy">
+      <div class="hero-section__availability">
+        <span class="hero-section__availability-indicator"></span>
+        {{ hero.availability }}
+      </div>
+
+      <app-section-header
+        [eyebrow]="hero.eyebrow"
+        [title]="hero.name + ' — ' + hero.title"
+        [description]="hero.tagline"
+      />
+
+      <p class="hero-section__summary">{{ hero.summary }}</p>
+
+      <div class="hero-section__actions">
+        <a
+          class="hero-section__button hero-section__button--primary"
+          href="#{{ hero.primaryAction.fragment }}"
+          (click)="scrollToSection(hero.primaryAction.fragment, $event)"
+        >
+          {{ hero.primaryAction.label }}
+        </a>
+
+        <a
+          class="hero-section__button hero-section__button--secondary"
+          href="#{{ hero.secondaryAction.fragment }}"
+          (click)="scrollToSection(hero.secondaryAction.fragment, $event)"
+        >
+          {{ hero.secondaryAction.label }}
+        </a>
+      </div>
+
+      <div class="hero-section__stats">
+        @for (stat of hero.stats; track stat.label) {
+          <article class="hero-section__stat-card">
+            <strong>{{ stat.value }}</strong>
+            <span>{{ stat.label }}</span>
+          </article>
+        }
+      </div>
+
+      <div class="hero-section__chips" aria-label="Core technology highlights">
+        @for (skill of hero.highlightedSkills; track skill) {
+          <span>{{ skill }}</span>
+        }
+      </div>
+    </div>
+
+    <aside class="hero-section__panel" aria-label="Professional highlights">
+      <div class="hero-section__panel-badge">Angular 21 · Standalone · API-ready</div>
+      <h3>Modern frontend architecture for premium digital products.</h3>
+      <p>
+        This portfolio foundation is designed for future backend integration, content-driven sections,
+        recruiter conversion, and polished freelance lead generation.
+      </p>
+
+      <div class="hero-section__highlight-list">
+        @for (highlight of hero.highlights; track highlight.title) {
+          <article class="hero-section__highlight-card">
+            <h4>{{ highlight.title }}</h4>
+            <p>{{ highlight.description }}</p>
+          </article>
+        }
+      </div>
+    </aside>
+  </div>
+</section>

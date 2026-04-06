@@ -1,0 +1,28 @@
+<article class="project-card">
+  <div class="project-card__header">
+    <div>
+      <p class="project-card__eyebrow">Featured project</p>
+      <h3>{{ project().title }}</h3>
+    </div>
+    <span class="project-card__badge">{{ project().timeline }}</span>
+  </div>
+
+  <p class="project-card__description">{{ project().description }}</p>
+
+  <div class="project-card__stack">
+    @for (tech of project().techStack; track tech) {
+      <span>{{ tech }}</span>
+    }
+  </div>
+
+  <ul class="project-card__achievements">
+    @for (achievement of project().achievements; track achievement) {
+      <li>{{ achievement }}</li>
+    }
+  </ul>
+
+  <div class="project-card__actions">
+    <a [href]="project().liveDemoUrl" target="_blank" rel="noreferrer">Live Demo</a>
+    <a [href]="project().githubUrl" target="_blank" rel="noreferrer">GitHub</a>
+  </div>
+</article>

@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+
+.section-header {
+  display: grid;
+  gap: 0.875rem;
+
+  &--center {
+    justify-items: center;
+    text-align: center;
+  }
+}
+
+.section-header__eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgb(56 189 248);
+}
+
+.section-header__title {
+  margin: 0;
+  max-width: 14ch;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  font-weight: 800;
+  color: var(--color-heading);
+}
+
+.section-header__description {
+  margin: 0;
+  max-width: 60ch;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-muted);
+}

@@ -1,0 +1,178 @@
+<main class="home-page">
+  <div class="home-page__container">
+    <app-hero />
+
+    <section id="about" class="portfolio-section">
+      <app-section-header
+        eyebrow="About"
+        title="Engineering scalable Angular products with enterprise clarity."
+        [description]="about.summary"
+      />
+
+      <div class="about-grid">
+        <div class="about-panel">
+          <h3>Core strengths</h3>
+          <ul>
+            @for (strength of about.strengths; track strength) {
+              <li>{{ strength }}</li>
+            }
+          </ul>
+        </div>
+
+        <div class="about-highlights">
+          @for (highlight of about.highlights; track highlight.title) {
+            <article class="about-highlight-card">
+              <h3>{{ highlight.title }}</h3>
+              <p>{{ highlight.description }}</p>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="portfolio-section">
+      <app-section-header
+        eyebrow="Projects"
+        title="Selected Angular and MEAN stack work that proves delivery quality."
+        description="Each card is a real scroll target now, so the Projects nav lands on meaningful content instead of an empty anchor placeholder."
+      />
+
+      <div class="projects-grid">
+        @for (project of projects; track project.title) {
+          <app-project-card [project]="project" />
+        }
+      </div>
+    </section>
+
+    <section id="services" class="portfolio-section">
+      <app-section-header
+        eyebrow="Services"
+        title="Delivery focused on frontend excellence and scalable full stack systems."
+      />
+
+      <div class="services-grid">
+        @for (service of services; track service.title) {
+          <article class="content-card">
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.description }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section id="skills" class="portfolio-section">
+      <app-section-header
+        eyebrow="Skills"
+        title="A balanced stack across frontend, backend, and delivery tooling."
+      />
+
+      <div class="skills-grid">
+        @for (category of skillCategories; track category.title) {
+          <article class="content-card skill-card">
+            <div class="skill-card__title">
+              <span>{{ category.icon }}</span>
+              <h3>{{ category.title }}</h3>
+            </div>
+
+            <div class="skill-card__chips">
+              @for (item of category.items; track item) {
+                <span>{{ item }}</span>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section id="contact" class="portfolio-section portfolio-section--contact">
+      <app-section-header
+        eyebrow="Contact"
+        title="Let's build your project."
+        description="Available for freelance work, contract engagements, and senior Angular opportunities."
+      />
+
+      <div class="contact-grid">
+        <article class="content-card contact-card">
+          <h3>Contact details</h3>
+          <div class="contact-list">
+            @for (item of contactMethods; track item.label) {
+              <div class="contact-list__item">
+                <a [href]="item.href" target="_blank" rel="noreferrer">
+                  <span>{{ item.label }}</span>
+                  <strong>{{ item.value }}</strong>
+                </a>
+
+                <button type="button" (click)="copyContactDetail(item.label, item.value)">
+                  {{ copiedContactLabel() === item.label ? 'Copied' : 'Copy' }}
+                </button>
+              </div>
+            }
+          </div>
+        </article>
+
+        <article class="content-card contact-card">
+          <h3>Send a project brief</h3>
+          <form class="contact-form" #projectBriefForm="ngForm" (ngSubmit)="submitProjectBrief(projectBriefForm)">
+            <label>
+              <span>Name</span>
+              <input
+                type="text"
+                name="name"
+                [(ngModel)]="projectBrief.name"
+                #nameModel="ngModel"
+                placeholder="Your name"
+                required
+              />
+              @if (nameModel.invalid && nameModel.touched) {
+                <small class="contact-form__error">Please enter your name.</small>
+              }
+            </label>
+            <label>
+              <span>Email</span>
+              <input
+                type="email"
+                name="email"
+                [(ngModel)]="projectBrief.email"
+                #emailModel="ngModel"
+                placeholder="you@example.com"
+                required
+                email
+              />
+              @if (emailModel.invalid && emailModel.touched) {
+                <small class="contact-form__error">Please enter a valid email address.</small>
+              }
+            </label>
+            <label>
+              <span>Project details</span>
+              <textarea
+                rows="5"
+                name="details"
+                [(ngModel)]="projectBrief.details"
+                #detailsModel="ngModel"
+                placeholder="Tell me about your project, timeline, and goals"
+                required
+              ></textarea>
+              @if (detailsModel.invalid && detailsModel.touched) {
+                <small class="contact-form__error">Please add a short project brief.</small>
+              }
+            </label>
+
+            <button type="submit" [disabled]="isSubmitting()">
+              {{ isSubmitting() ? 'Submitting...' : "Let's build your project" }}
+            </button>
+
+            @if (formNotice()) {
+              <p
+                class="contact-form__notice"
+                [class.contact-form__notice--error]="formNoticeType() === 'error'"
+                [class.contact-form__notice--success]="formNoticeType() === 'success'"
+              >
+                {{ formNotice() }}
+              </p>
+            }
+          </form>
+        </article>
+      </div>
+    </section>
+  </div>
+</main>

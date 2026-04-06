@@ -1,0 +1,65 @@
+<header class="navbar" [class.navbar--scrolled]="isScrolled()">
+  <div class="navbar__inner">
+    <a class="navbar__brand" href="#home" (click)="scrollToSection('home', $event)">
+      <span class="navbar__brand-mark">RK</span>
+      <span class="navbar__brand-copy">
+        <strong>Rajesh Koram</strong>
+        <small>Angular Developer Showcase</small>
+      </span>
+    </a>
+
+    <nav class="navbar__links navbar__links--desktop" aria-label="Primary navigation">
+      @for (link of navLinks; track link.fragment) {
+        <a
+          href="#{{ link.fragment }}"
+          [class.navbar__link--active]="activeFragment() === link.fragment"
+          [attr.aria-current]="activeFragment() === link.fragment ? 'page' : null"
+          (click)="scrollToSection(link.fragment, $event)"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="navbar__actions">
+      <button
+        type="button"
+        class="navbar__theme-toggle"
+        (click)="themeService.toggleTheme()"
+        [attr.aria-label]="themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <span>{{ themeService.theme() === 'dark' ? '☀️' : '🌙' }}</span>
+      </button>
+
+      <a class="navbar__cta" href="#contact" (click)="scrollToSection('contact', $event)">Let's Talk</a>
+
+      <button
+        type="button"
+        class="navbar__menu-button"
+        [attr.aria-expanded]="isMenuOpen()"
+        aria-label="Toggle navigation menu"
+        (click)="toggleMenu()"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  @if (isMenuOpen()) {
+    <nav class="navbar__mobile-panel" aria-label="Mobile navigation">
+      @for (link of navLinks; track link.fragment) {
+        <a
+          href="#{{ link.fragment }}"
+          [class.navbar__link--active]="activeFragment() === link.fragment"
+          [attr.aria-current]="activeFragment() === link.fragment ? 'page' : null"
+          (click)="scrollToSection(link.fragment, $event)"
+        >
+          {{ link.label }}
+        </a>
+      }
+      <a class="navbar__mobile-cta" href="#contact" (click)="scrollToSection('contact', $event)">Start a project</a>
+    </nav>
+  }
+</header>
