@@ -171,7 +171,7 @@ Client deployment on Netlify:
 - production API calls use `src/environments/environment.production.ts`
 
 Server deployment on a Node host:
-- use [server/render.yaml](server/render.yaml) as the backend deployment manifest
+- use [server/vercel.json](server/vercel.json) as the backend deployment manifest
 - set server secrets in the hosting dashboard, not in the repo
 - set `NODE_ENV=production`
 - the server starts from the `server` folder only
@@ -183,7 +183,7 @@ Deployment result:
 
 For separate deployments:
 - development client API base URL is `/api`
-- production client API base URL must point to your deployed backend, for example `https://your-backend-service.onrender.com/api`
+- production client API base URL must point to your deployed backend, for example `https://your-backend-service.vercel.app/api`
 
 ## Notes
 
