@@ -12,11 +12,6 @@
 /client/node_modules
 /server/node_modules
 
-# Environment files
-/server/.env
-/server/.env.dev
-/server/.env.prod
-
 # Logs
 npm-debug.log
 yarn-error.log
