@@ -30,7 +30,7 @@ async function bootstrap(): Promise<void> {
   };
 
   const server = app.listen(env.PORT, () => {
-    console.info(`[server] listening on http://localhost:${env.PORT}`);
+    console.info(`[server] listening on port ${env.PORT} (${env.NODE_ENV})`);
     console.info(`[server] database status: ${getDatabaseStatus()}`);
   });
 

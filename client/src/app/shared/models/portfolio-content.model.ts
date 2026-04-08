@@ -81,4 +81,5 @@ export interface ContactSubmissionItem extends ContactSubmissionPayload {
 export interface ContactSubmissionResponse {
   message: string;
   item: ContactSubmissionItem;
+  emailDelivered?: boolean;
 }
