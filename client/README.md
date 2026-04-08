@@ -165,16 +165,25 @@ Backend runs on:
 
 ## Production deployment
 
-From the workspace root:
-- `npm run install:all`
-- `npm run build`
+Client deployment on Netlify:
+- Netlify uses [client/netlify.toml](client/netlify.toml)
+- the frontend build runs from the `client` folder only
+- production API calls use `src/environments/environment.production.ts`
+
+Server deployment on a Node host:
+- use [server/render.yaml](server/render.yaml) as the backend deployment manifest
+- set server secrets in the hosting dashboard, not in the repo
 - set `NODE_ENV=production`
-- start with `npm start`
+- the server starts from the `server` folder only
 
 Deployment result:
 - Express serves the compiled Angular app from `client/dist/devportfolio-pro/browser`
 - API endpoints remain available under `/api/*`
 - frontend calls such as `/api/contact` work without a separate frontend host or proxy in production
+
+For separate deployments:
+- development client API base URL is `/api`
+- production client API base URL must point to your deployed backend, for example `https://your-backend-service.onrender.com/api`
 
 ## Notes
 

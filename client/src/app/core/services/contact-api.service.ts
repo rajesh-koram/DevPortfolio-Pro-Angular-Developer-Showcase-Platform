@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { environment } from '../../../environments/environment';
 import { ContactSubmissionPayload, ContactSubmissionResponse } from '../../shared/models/portfolio-content.model';
 
 @Injectable({
@@ -9,7 +10,8 @@ import { ContactSubmissionPayload, ContactSubmissionResponse } from '../../share
 })
 export class ContactApiService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = '/api/contact';
+  private readonly apiBaseUrl = environment.apiBaseUrl.replace(/\/$/, '');
+  private readonly apiUrl = `${this.apiBaseUrl}/contact`;
 
   submitProjectBrief(payload: ContactSubmissionPayload): Observable<ContactSubmissionResponse> {
     return this.http.post<ContactSubmissionResponse>(this.apiUrl, payload);
