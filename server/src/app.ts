@@ -8,6 +8,7 @@ import express from 'express';
 import morgan from 'morgan';
 
 import { env } from './config/env.js';
+import { connectDatabase } from './config/db.js';
 import { contactRouter } from './routes/contact.routes.js';
 import { healthRouter } from './routes/health.routes.js';
 import { projectRouter } from './routes/project.routes.js';
@@ -15,6 +16,7 @@ import { serviceRouter } from './routes/service.routes.js';
 import { skillRouter } from './routes/skill.routes.js';
 import { errorMiddleware } from './middlewares/error.middleware.js';
 import { notFoundMiddleware } from './middlewares/not-found.middleware.js';
+import { asyncHandler } from './utils/async-handler.js';
 
 type ClientBuild = {
   directory: string;
@@ -43,6 +45,10 @@ function resolveClientBuild(): ClientBuild | null {
 export function createApp() {
   const app = express();
   const clientBuild = resolveClientBuild();
+  const ensureDatabaseConnection = asyncHandler(async (_request, _response, next) => {
+    await connectDatabase();
+    next();
+  });
 
   app.disable('x-powered-by');
 
@@ -67,10 +73,10 @@ export function createApp() {
   });
 
   app.use('/api/health', healthRouter);
-  app.use('/api/projects', projectRouter);
-  app.use('/api/services', serviceRouter);
-  app.use('/api/skills', skillRouter);
-  app.use('/api/contact', contactRouter);
+  app.use('/api/projects', ensureDatabaseConnection, projectRouter);
+  app.use('/api/services', ensureDatabaseConnection, serviceRouter);
+  app.use('/api/skills', ensureDatabaseConnection, skillRouter);
+  app.use('/api/contact', ensureDatabaseConnection, contactRouter);
 
   if (clientBuild) {
     app.use(

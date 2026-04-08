@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { env } from './env.js';
 
 let databaseListenersRegistered = false;
+let connectionPromise: Promise<void> | null = null;
 
 function resolveDatabaseStatus(): string {
   switch (mongoose.connection.readyState) {
@@ -49,16 +50,35 @@ function registerDatabaseListeners(): void {
 
 export async function connectDatabase(): Promise<void> {
   registerDatabaseListeners();
+
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  if (connectionPromise) {
+    await connectionPromise;
+    return;
+  }
+
   console.info(`[database] status: ${resolveDatabaseStatus()}`);
   console.info('[database] connecting...');
 
-  await mongoose.connect(env.MONGODB_URI, {
-    serverSelectionTimeoutMS: 10000,
-  });
+  connectionPromise = mongoose
+    .connect(env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 10000,
+    })
+    .then(() => undefined)
+    .catch((error) => {
+      connectionPromise = null;
+      throw error;
+    });
+
+  await connectionPromise;
 }
 
 export async function disconnectDatabase(): Promise<void> {
   console.info(`[database] status: ${resolveDatabaseStatus()}`);
+  connectionPromise = null;
   await mongoose.disconnect();
 }
 
