@@ -2,6 +2,12 @@
 
 A full-stack developer portfolio built with Angular 21 on the frontend and a new MEAN-style backend using Node.js, Express, and MongoDB.
 
+The production deployment path is now:
+- build the Angular client
+- build the Node server
+- start the server in production mode
+- let Express serve the compiled Angular app and the `/api/*` routes from the same deployment
+
 ## Stack
 
 ### Frontend
@@ -53,6 +59,7 @@ server/
 - `GET /api/health` for server and database health
 - `GET /api/projects` for Mongo-backed project data
 - `POST /api/contact` to store submitted project briefs in MongoDB
+- Contact submissions can also notify the admin by SMTP email
 - Seed script for projects collection
 - Environment-based config for Mongo connection and client origin
 
@@ -76,10 +83,38 @@ From the `server` folder:
 
 ### 3. Configure environment
 
-Copy [../server/.env.example](../server/.env.example) to `server/.env` and update values:
+Create `server/.env.dev` for local development and update these values:
 - `PORT`
 - `MONGODB_URI`
 - `CLIENT_ORIGIN`
+- `ADMIN_EMAIL`
+- `MAIL_FROM`
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_SECURE`
+- `SMTP_USER`
+- `SMTP_PASS`
+
+Create `server/.env.prod` for deployment and update these values:
+- `PORT`
+- `MONGODB_URI` or `MONGODB_URL`
+- `CLIENT_ORIGIN`
+- `ADMIN_EMAIL`
+- `MAIL_FROM`
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_SECURE`
+- `SMTP_USER`
+- `SMTP_PASS`
+
+Optional:
+- `CLIENT_DIST_PATH` if your built Angular files are not at the default `client/dist/devportfolio-pro/browser` location. This path is resolved relative to `server/`.
+
+The server uses only one env file at a time:
+- `server/.env.dev` when `NODE_ENV` is not set to `production`
+- `server/.env.prod` when `NODE_ENV=production`
+
+Deployment environment variables provided by your host override values in that file.
 
 Example Mongo local connection:
 - `mongodb://127.0.0.1:27017/devportfolio-pro`
@@ -121,9 +156,30 @@ Backend runs on:
 - `npm run start`
 - `npm run seed`
 
+### Workspace root
+- `npm run install:all` — install both frontend and backend dependencies
+- `npm run build` — build the Angular client and Node server for deployment
+- `npm start` — start the compiled server from the workspace root
+- `npm run dev:client` — start the Angular dev server from the workspace root
+- `npm run dev:server` — start the backend watcher from the workspace root
+
+## Production deployment
+
+From the workspace root:
+- `npm run install:all`
+- `npm run build`
+- set `NODE_ENV=production`
+- start with `npm start`
+
+Deployment result:
+- Express serves the compiled Angular app from `client/dist/devportfolio-pro/browser`
+- API endpoints remain available under `/api/*`
+- frontend calls such as `/api/contact` work without a separate frontend host or proxy in production
+
 ## Notes
 
 - MongoDB must be running before the backend starts
 - The contact form stores data in MongoDB through `/api/contact`
+- To notify the admin on submit, configure SMTP values in the active server env file
 - Project cards can now be migrated from frontend mock data to `/api/projects` next
 - The current structure is ready for auth, admin dashboard APIs, and CMS-style content management
